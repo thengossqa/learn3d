@@ -86,7 +86,7 @@ function update(data){
       .attr("class", "bar")
       .attr("x", function(d,i) { return x(i); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d,i) { return y(d); })
+      .attr("y", height)//function(d,i) { return y(0); }) // 
       .attr("height", '0')
       //.merge(data)
       //.transition()//not work
@@ -101,7 +101,7 @@ function update(data){
             .style('fill', dynamicColor)
     });
 
-//  cbar.transition().attr("height", function(d){ return height - y(d); });
+  cbar.transition().attr("y", function(d,i) { return y(d); }).attr("height", function(d){ return height - y(d); });
 
   cbar.exit().transition().attr("height", function(d){ return height - y(d);}).remove();//???? exit and remove but it still appear
 
@@ -114,18 +114,19 @@ function update(data){
       .append("text")
       .attr("class", "bartext")
       .attr("text-anchor", "middle")
-      .attr("fill", "white")
-      .attr("x", function(d,i) {
+      .attr("fill", "white");
+      sel.attr("x", function(d,i) {
           return x(i)+x.rangeBand()/2;
       })
       .attr("y", function(d,i) {
           return y(d) +yTextPadding;
-      })
-      .text(function(d){
+      });
+      
+      sel.text(function(d){
            return d3.format(".2f")(d);
       });
 
-      sel.exit().remove();
+      sel.exit().transition().remove();
 
 //end d3 selection
 }
@@ -138,9 +139,9 @@ function refresh_data(){
   
 }
 
-setTimeout(function () {
-    update(data)
-  }, 2000)
+setInterval(function () {
+    update(refresh_data())
+  }, 500)
 </script>
 <head></head>
 <body>
