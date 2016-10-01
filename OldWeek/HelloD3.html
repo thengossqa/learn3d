@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<script src="d3.js"></script>
+
+<body>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+<p>Anothere paragraph.</p>
+<p>Keep going let see what happen</p>
+<svg height="100" width="100">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+</svg>
+</body>
+<script>
+	d3.selectAll("p").style("color", "red");
+	d3.selectAll('h1').style('color','BlueViolet');
+	d3.select("body").style("background-color", "Silver");
+	d3.selectAll("p").style("color", function(d, i) {
+    									return i % 2 ? "#00b0c1" : "#eee";} );
+	d3.selectAll("p")
+  .data([14, 24, 32, 16, 23, 42])
+    .style("font-size", function(d) { return d + "px"; });
+
+
+    // Update…
+var p = d3.select("body")
+  .selectAll("p")
+  .data([4, 8, 15, 16, 23, 42, 50])
+    .text(function(d,i) { return d; });
+
+// Enter…
+p.enter().append("p")
+    .text(function(d) { return d; });
+// Exit…
+p.exit().remove();
+
+d3.selectAll("circle").transition()
+    .duration(750)
+    .delay(function(d, i) { return i * 10; })
+    .attr("r", function(d) { return Math.sqrt(d * scale); });
+</script>
+</html>
