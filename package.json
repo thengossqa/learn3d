@@ -1,0 +1,21 @@
+{
+  "name": "learn3d",
+  "version": "1.0.0",
+  "description": "Trainningd3",
+  "main": "d3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TheNgo",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "d3": "3.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Ihavenotgit"
+  },
+  "keywords": [
+    "dontknow"
+  ]
+}

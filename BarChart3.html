@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+
+
+</style>
+<svg class="chart"></svg>
+<script src="d3.js" charset="utf-8"></script>
+<script src="wavegen.js" ></script>
+<script>
+var gen = new WaveGenerator();
+gen.resolution = 20;
+gen.amplitude = 400;
+var data = gen.next();
+
+console.log(data);
+
+
+var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], 0.1, 0.2);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  x.domain(data.map(function(d,i) { return i; }));
+  y.domain([0, d3.max(data, function(d) { return d; })]);
+
+ svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.svg.axis().scale(x).orient("bottom"));
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(d3.svg.axis().scale(y).orient("left"));
+
+//transistion svg not appear?????
+svg.transition()
+    .attr('height', function (data) {
+        return y(data);
+    })
+    .attr('y', function (data) {
+        return height - y(data);
+    })
+    .delay(function (data, i) {
+        return i * 20;
+    })
+    .duration(2000)
+    .ease('elastic');
+
+update(data)
+
+function update(data){
+
+
+  var cbar = svg.selectAll(".bar")
+      .data(data);
+     cbar.enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d,i) { return x(i); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d,i) { return y(d); })
+      .attr("height", '0')
+      //.merge(data)
+      //.transition()//not work
+      //.delay(1000)
+      
+      .on('mouseover', function(data) {
+        dynamicColor = this.style.fill;
+        d3.select(this)
+            .style('fill', '#3c763d')})
+      .on('mouseout', function(data) {
+        d3.select(this)
+            .style('fill', dynamicColor)
+    });
+
+//  cbar.transition().attr("height", function(d){ return height - y(d); });
+
+  cbar.exit().transition().attr("height", function(d){ return height - y(d);}).remove();//???? exit and remove but it still appear
+
+
+      var yTextPadding = 10;
+    var sel = svg.selectAll(".bartext")
+      .data(data);
+
+    sel.enter()
+      .append("text")
+      .attr("class", "bartext")
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("x", function(d,i) {
+          return x(i)+x.rangeBand()/2;
+      })
+      .attr("y", function(d,i) {
+          return y(d) +yTextPadding;
+      })
+      .text(function(d){
+           return d3.format(".2f")(d);
+      });
+
+      sel.exit().remove();
+
+//end d3 selection
+}
+
+function refresh_data(){
+  
+        data=gen.next();
+        data = data.slice(~~(Math.random() * 10));
+        update(data);
+  
+}
+
+setTimeout(function () {
+    update(data)
+  }, 2000)
+</script>
+<head></head>
+<body>
+<button class="b" onclick="refresh_data()">Renew Data</button>
+</body>

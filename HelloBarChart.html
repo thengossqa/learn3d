@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>D3 Pie Chart</title>
+</head>
+<script src="d3.js"></script>
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+<style>
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+</style>
+<div class="chart">
+  <div style="width: 40px;">4</div>
+  <div style="width: 80px;">8</div>
+  <div style="width: 150px;">15</div>
+  <div style="width: 160px;">16</div>
+  <div style="width: 230px;">23</div>
+  <div style="width: 420px;">42</div>
+</div>
+
+
+
+<script >var div = document.createElement("div");
+div.innerHTML = "Hello, world!";
+div.style.color = "red";
+document.body.appendChild(div);
+
+//use with d3
+var body = d3.select("body");
+var div = body.append("div");
+div.html("Hello, world!");
+div.style.color="red";
+
+var section = d3.selectAll("section");
+var div = section.append("div");
+div.html("Hello, world!");
+
+
+</script>
+
+</body>
+
+</html>
