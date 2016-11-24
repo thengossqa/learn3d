@@ -2,7 +2,7 @@ var http = require('http');
  
 var fs = require('fs');
  
-var index = fs.readFileSync('index.html');
+var index = fs.readFileSync('/OldWeek/Barchart3.html');
  
 http.createServer(function(request,response){
  

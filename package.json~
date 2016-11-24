@@ -1,0 +1,29 @@
+{
+  "name": "learn3d",
+  "version": "1.0.0",
+  "description": "Trainningd3",
+  "main": "d3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TheNgo",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "d3": "3.5.1"
+  },
+  "scripts": {
+    "start": "npm run server",
+    "server": "http-server -c-1 -p 8000 dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Ihavenotgit"
+  },
+  "dependencies": {
+    "http-server": "^0.9.0"
+  },
+  "keywords": [
+    "dontknow"
+  ]
+
+}
