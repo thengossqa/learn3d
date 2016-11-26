@@ -27,6 +27,7 @@
 		var dataset = [];
 
 
+			var c20c = d3.scale.category20c();
 
 			//Width and height
 			var w = 500;
@@ -146,10 +147,14 @@
 			   		return yScale(d[1])+ Math.round(Math.random() * 100);
 			   })
 			   .attr("r", function(d) {
-			   		return rScale(d[1]);
-			   });
+			   		return rScale(d[1])+ Math.round(Math.random() * 15);
+			   })
+			   .attr("fill",c20c);
 
 		};
+setInterval(function () {
+	    renew_data();
+	  }, 2000);
 
 		</script>
 		<button onclick="renew_data()">Click</button>
