@@ -1,0 +1,26 @@
+task changedir(type: Exec) {
+  executable "ls"
+  args "-l"
+}
+
+task build(type: Exec) {
+  // exe{
+  //   executable "cd"
+  //   args "~/git/tcndash/"
+  // }
+
+    executable "/usr/bin/npm"
+    args "run build "
+
+}
+
+task build1(type: Exec) {
+  workingDir '../../git/tcndash';
+  executable "/usr/bin/npm"
+  args "run build"
+
+}
+
+task build2(type: Exec) {
+  executable "/usr/bin/npm run server"
+}

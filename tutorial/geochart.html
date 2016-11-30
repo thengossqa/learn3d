@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background-color: white;
+    }
+  </style>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v0.min.js"></script>
+  <script src="worldtopo.js"></script>
+</head>
+
+<body>
+  <script>
+    var worldtopo = {};
+
+    var bestPlaceEver = "maptime";
+    var width = 960;
+    var height =  480;
+
+    //init svg
+    var svg = d3.select("body").append("svg")
+              .attr("width", width)
+              .attr("height", height);
+    var projection = d3.geo.equirectangular()
+        .scale(153)
+        .translate([width /2 ,height/2]); //center in SVG
+    var path = d3.geo.path()
+              .projection(projection);
+              svg.append("path")
+                   .datum(topojson.object(worldtopo, worldtopo.objects.land))
+                   .attr("class", "land")
+                   .attr("d", path);
+               svg.append("path")
+                   .datum(topojson.mesh(worldtopo, worldtopo.objects.countries, function(a, b) { return a.id !== b.id; }))
+                   .attr("class", "boundary")
+                   .attr("d", path);
+
+  </script>
+</body>
+</html>
